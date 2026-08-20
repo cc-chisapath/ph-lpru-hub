@@ -1,0 +1,494 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>ศูนย์รวมระบบ</title>
+
+<link rel="manifest" href="manifest.json">
+<link rel="icon" type="image/png" href="icons/favicon.png">
+<link rel="apple-touch-icon" href="icons/apple-touch-icon.png">
+<meta name="theme-color" content="#2b528a">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="apple-mobile-web-app-title" content="ศูนย์รวมระบบ">
+<meta name="description" content="ศูนย์รวมระบบสารสนเทศ สาขาวิชาสาธารณสุขศาสตร์ มหาวิทยาลัยราชภัฏลำปาง">
+
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+Thai:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+:root{
+  --หลัก:#2b528a; --หลักอ่อน:#eaf1fa; --พื้น:#f2f4f8; --การ์ด:#fff;
+  --ขอบ:#e2e7f0; --ตัวอักษร:#1b2432; --จาง:#6b7684; --โค้ง:18px;
+  --เงา:0 1px 2px rgba(25,45,80,.04), 0 8px 24px rgba(25,45,80,.07);
+}
+@media (prefers-color-scheme: dark){
+  :root{
+    --พื้น:#0f151f; --การ์ด:#18202c; --ขอบ:#28313f;
+    --ตัวอักษร:#e6ecf5; --จาง:#98a4b4; --หลักอ่อน:#1c2b41;
+    --เงา:0 1px 2px rgba(0,0,0,.3), 0 8px 24px rgba(0,0,0,.25);
+  }
+}
+*{box-sizing:border-box;-webkit-tap-highlight-color:transparent}
+html,body{margin:0;padding:0}
+body{
+  font-family:'IBM Plex Sans Thai',-apple-system,sans-serif;
+  background:var(--พื้น);color:var(--ตัวอักษร);
+  font-size:15px;line-height:1.6;-webkit-font-smoothing:antialiased;
+  padding-bottom:calc(30px + env(safe-area-inset-bottom));
+  overscroll-behavior-y:contain;
+}
+.ซ่อน{display:none !important}
+h1,h2,h3{margin:0;font-weight:600;line-height:1.35}
+button{font-family:inherit;cursor:pointer;border:none;background:none;color:inherit}
+input,textarea,select{
+  font-family:inherit;font-size:16px;width:100%;padding:10px 12px;
+  border:1px solid var(--ขอบ);border-radius:11px;background:var(--การ์ด);
+  color:var(--ตัวอักษร);outline:none;
+}
+input:focus,select:focus{border-color:var(--หลัก);box-shadow:0 0 0 3px rgba(43,82,138,.14)}
+
+.หัว{
+  background:linear-gradient(150deg,#3d6fb4,#24406e);color:#fff;
+  padding:calc(16px + env(safe-area-inset-top)) 18px 24px;
+  display:flex;align-items:center;gap:14px;
+}
+.หัว img{width:46px;height:46px;border-radius:12px;background:#fff;padding:3px;flex:none}
+.หัว .ข้อความ{flex:1;min-width:0}
+.หัว h1{font-size:19px}
+.หัว p{margin:3px 0 0;font-size:12.5px;opacity:.85;line-height:1.5}
+.ปุ่มเฟือง{
+  width:40px;height:40px;border-radius:50%;background:rgba(255,255,255,.16);
+  color:#fff;font-size:19px;flex:none;display:flex;align-items:center;justify-content:center;
+}
+.ปุ่มเฟือง:active{background:rgba(255,255,255,.32)}
+
+.กรอบ{max-width:900px;margin:0 auto;padding:0 16px}
+
+.ประกาศ{
+  background:#fff7e6;border:1px solid #f0dcb4;color:#7a5312;
+  border-radius:14px;padding:13px 16px;font-size:14px;margin-top:16px;line-height:1.65;
+}
+.ออฟไลน์{
+  background:var(--หลักอ่อน);border:1px solid var(--ขอบ);color:var(--หลัก);
+  border-radius:12px;padding:10px 14px;font-size:13px;margin-top:14px;text-align:center;
+}
+
+.หมวด{margin-top:24px}
+.หมวด > h2{font-size:15.5px;margin-bottom:11px;padding-left:2px}
+.กริด{display:grid;grid-template-columns:repeat(3,1fr);gap:11px}
+@media(min-width:560px){.กริด{grid-template-columns:repeat(4,1fr)}}
+@media(min-width:760px){.กริด{grid-template-columns:repeat(5,1fr)}}
+
+.ไทล์{
+  background:var(--การ์ด);border:1px solid var(--ขอบ);border-radius:var(--โค้ง);
+  box-shadow:var(--เงา);padding:14px 8px 12px;text-align:center;
+  display:flex;flex-direction:column;align-items:center;gap:8px;
+  text-decoration:none;color:inherit;transition:transform .12s;
+}
+.ไทล์:active{transform:scale(.95)}
+.ไอคอน{
+  width:52px;height:52px;border-radius:15px;display:flex;align-items:center;
+  justify-content:center;font-size:25px;line-height:1;
+}
+.ไอคอน.ฟ้า{background:#e3edfb}   .ไอคอน.เขียว{background:#e2f5ec}
+.ไอคอน.ม่วง{background:#efe8fa}  .ไอคอน.ส้ม{background:#fdeee0}
+.ไอคอน.แดง{background:#fce8ec}   .ไอคอน.คราม{background:#e6ecfa}
+.ไอคอน.เทา{background:#eef1f5}
+@media (prefers-color-scheme: dark){
+  .ไอคอน.ฟ้า{background:#1d3050}  .ไอคอน.เขียว{background:#16342a}
+  .ไอคอน.ม่วง{background:#2a2145} .ไอคอน.ส้ม{background:#3a2a17}
+  .ไอคอน.แดง{background:#3b1d25}  .ไอคอน.คราม{background:#1e2544}
+  .ไอคอน.เทา{background:#232b37}
+}
+.ไทล์ .ชื่อ{font-size:13px;font-weight:500;line-height:1.4}
+.ไทล์ .ย่อย{font-size:11px;color:var(--จาง);line-height:1.35}
+
+.ว่าง{
+  background:var(--การ์ด);border:1px dashed var(--ขอบ);border-radius:var(--โค้ง);
+  padding:34px 22px;text-align:center;color:var(--จาง);margin-top:22px;font-size:14px;line-height:1.75;
+}
+.ว่าง .ใหญ่{font-size:36px;margin-bottom:8px}
+.ว่าง b{color:var(--ตัวอักษร)}
+
+.แนะนำ{
+  background:var(--การ์ด);border:1px solid var(--ขอบ);border-radius:var(--โค้ง);
+  padding:16px 18px;margin-top:22px;box-shadow:var(--เงา);
+}
+.แนะนำ h3{font-size:14.5px;margin-bottom:9px}
+.แนะนำ ol{margin:0;padding-left:20px;font-size:13.5px;color:var(--จาง);line-height:1.85}
+.แท็บ{display:flex;gap:7px;margin-bottom:11px}
+.แท็บ button{font-size:13px;padding:6px 14px;border-radius:20px;background:var(--พื้น);color:var(--จาง)}
+.แท็บ button.ใช้อยู่{background:var(--หลัก);color:#fff;font-weight:500}
+
+.ท้าย{text-align:center;font-size:11.5px;color:var(--จาง);margin-top:26px;line-height:1.8}
+
+.ฉาก{position:fixed;inset:0;background:rgba(15,25,45,.6);z-index:60;display:flex;align-items:flex-end;justify-content:center}
+@media(min-width:640px){.ฉาก{align-items:center;padding:20px}}
+.กล่อง{background:var(--การ์ด);width:100%;max-width:660px;max-height:92vh;overflow-y:auto;border-radius:22px 22px 0 0}
+@media(min-width:640px){.กล่อง{border-radius:20px}}
+.กล่อง .หัวกล่อง{
+  padding:16px 20px;border-bottom:1px solid var(--ขอบ);display:flex;align-items:center;gap:12px;
+  position:sticky;top:0;background:var(--การ์ด);z-index:2;
+}
+.กล่อง .หัวกล่อง h3{font-size:16px;flex:1}
+.กล่อง .เนื้อ{padding:18px 20px}
+.กล่อง .ท้ายกล่อง{
+  padding:14px 20px calc(14px + env(safe-area-inset-bottom));
+  border-top:1px solid var(--ขอบ);display:flex;gap:9px;justify-content:flex-end;
+  position:sticky;bottom:0;background:var(--การ์ด);flex-wrap:wrap;
+}
+.ปิด{font-size:24px;color:var(--จาง);line-height:1;padding:2px 6px}
+.ปุ่มหลัก{background:var(--หลัก);color:#fff;font-weight:500;padding:11px 20px;border-radius:11px;font-size:14.5px}
+.ปุ่มรอง{background:var(--การ์ด);color:var(--หลัก);border:1px solid var(--ขอบ);padding:11px 20px;border-radius:11px;font-size:14.5px}
+.ปุ่มลบเล็ก{color:#c8566b;font-size:13px;padding:6px 10px}
+.ช่อง{margin-bottom:13px}
+.ช่อง label{display:block;font-size:12.5px;font-weight:500;color:var(--จาง);margin-bottom:5px}
+
+.แถวแก้{border:1px solid var(--ขอบ);border-radius:14px;padding:13px;margin-bottom:11px;background:var(--พื้น)}
+.แถวแก้ .บนสุด{display:flex;gap:9px;align-items:center;margin-bottom:9px}
+.แถวแก้ input.ไอ{width:56px;text-align:center;font-size:19px;padding:7px}
+.แถวแก้ input.ชื่อ{flex:1;font-weight:500}
+.แถวแก้ .คู่{display:grid;grid-template-columns:1fr 1fr;gap:9px;margin-top:9px}
+.แถวแก้ input,.แถวแก้ select{font-size:14px;padding:8px 10px}
+
+.แจ้ง{border-radius:12px;padding:12px 15px;font-size:13.5px;line-height:1.7;margin-bottom:14px}
+.แจ้ง.ผิด{background:#fdecef;color:#8c2d40;border:1px solid #f3ccd4}
+.แจ้ง.ดี{background:#e8f7f0;color:#1d6b4c;border:1px solid #bfe6d4}
+.แจ้ง.ข้อมูล{background:var(--หลักอ่อน);color:var(--หลัก);border:1px solid var(--ขอบ)}
+
+#ปุ่มติดตั้ง{
+  position:fixed;left:16px;right:16px;bottom:calc(16px + env(safe-area-inset-bottom));
+  background:var(--หลัก);color:#fff;padding:14px;border-radius:14px;font-size:15px;
+  font-weight:500;box-shadow:0 8px 30px rgba(20,40,80,.35);z-index:50;max-width:500px;margin:0 auto;
+  display:flex;align-items:center;justify-content:center;gap:9px;
+}
+</style>
+</head>
+<body>
+
+<div class="หัว">
+  <img src="icons/icon-192.png" alt="ตรามหาวิทยาลัยราชภัฏลำปาง">
+  <div class="ข้อความ">
+    <h1 id="ชื่อแอป">ศูนย์รวมระบบ</h1>
+    <p id="ชื่อหน่วยงาน">กำลังโหลด…</p>
+  </div>
+  <button class="ปุ่มเฟือง" onclick="เปิดตัวแก้ไข()" aria-label="ตั้งค่า">⚙</button>
+</div>
+
+<div class="กรอบ">
+  <div id="กล่องประกาศ"></div>
+  <div id="เนื้อหา"></div>
+
+  <div class="แนะนำ" id="กล่องแนะนำ">
+    <h3>📲 ติดตั้งเป็นแอปบนมือถือ</h3>
+    <div class="แท็บ">
+      <button id="ปุ่มios" class="ใช้อยู่" onclick="สลับวิธี('ios')">iPhone / iPad</button>
+      <button id="ปุ่มand" onclick="สลับวิธี('and')">Android</button>
+    </div>
+    <ol id="วิธีios">
+      <li>เปิดหน้านี้ด้วย <b>Safari</b></li>
+      <li>แตะปุ่ม <b>แชร์</b> (สี่เหลี่ยมมีลูกศรขึ้น) ด้านล่างจอ</li>
+      <li>เลื่อนหา <b>เพิ่มไปยังหน้าจอโฮม</b></li>
+      <li>แตะ <b>เพิ่ม</b> — จะได้ไอคอนแอปบนหน้าจอ เปิดแล้วเต็มจอไม่มีแถบเบราว์เซอร์</li>
+    </ol>
+    <ol id="วิธีand" class="ซ่อน">
+      <li>เปิดหน้านี้ด้วย <b>Chrome</b></li>
+      <li>แตะ <b>จุดสามจุด</b> มุมขวาบน</li>
+      <li>เลือก <b>ติดตั้งแอป</b> หรือ <b>เพิ่มลงในหน้าจอหลัก</b></li>
+      <li>แตะ <b>ติดตั้ง</b></li>
+    </ol>
+  </div>
+
+  <div class="ท้าย">
+    <span id="ท้ายหน่วยงาน"></span><br>
+    <span id="ปรับปรุงเมื่อ"></span>
+  </div>
+</div>
+
+<button id="ปุ่มติดตั้ง" class="ซ่อน" onclick="ติดตั้งแอป()">
+  <span>📲</span> ติดตั้งเป็นแอปบนเครื่องนี้
+</button>
+
+<div id="ฉาก" class="ฉาก ซ่อน" onclick="if(event.target===this)ปิดกล่อง()">
+  <div class="กล่อง">
+    <div class="หัวกล่อง">
+      <h3 id="หัวกล่อง">ตั้งค่า</h3>
+      <button class="ปิด" onclick="ปิดกล่อง()" aria-label="ปิด">&times;</button>
+    </div>
+    <div class="เนื้อ" id="เนื้อกล่อง"></div>
+    <div class="ท้ายกล่อง" id="ท้ายกล่อง"></div>
+  </div>
+</div>
+
+<script>
+var ข้อมูล = null;
+var รายการแก้ = [];
+var ตัวติดตั้ง = null;
+
+function $(id){ return document.getElementById(id); }
+function หนี(s){
+  return String(s === null || s === undefined ? '' : s)
+    .replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
+}
+
+/* ============================================================
+   โหลดรายการระบบ
+   ลำดับ : ไฟล์ systems.json บนเซิร์ฟเวอร์ → ถ้าโหลดไม่ได้ใช้ที่เก็บไว้ในเครื่อง
+   ============================================================ */
+function โหลด() {
+  fetch('systems.json?t=' + Date.now())
+    .then(function (r) { if (!r.ok) throw new Error('โหลดไม่ได้'); return r.json(); })
+    .then(function (d) {
+      ข้อมูล = d;
+      try { localStorage.setItem('ระบบสำรอง', JSON.stringify(d)); } catch (e) {}
+      วาด(false);
+    })
+    .catch(function () {
+      var สำรอง = null;
+      try { สำรอง = JSON.parse(localStorage.getItem('ระบบสำรอง') || 'null'); } catch (e) {}
+      if (สำรอง) { ข้อมูล = สำรอง; วาด(true); }
+      else {
+        $('เนื้อหา').innerHTML =
+          '<div class="ว่าง"><div class="ใหญ่">📡</div><b>เปิดไฟล์รายการระบบไม่ได้</b><br>' +
+          'ตรวจว่ามีไฟล์ <b>systems.json</b> อยู่ในโฟลเดอร์เดียวกับหน้านี้</div>';
+      }
+    });
+}
+
+function วาด(จากแคช) {
+  $('ชื่อแอป').textContent = ข้อมูล.ชื่อแอป || 'ศูนย์รวมระบบ';
+  $('ชื่อหน่วยงาน').textContent = ข้อมูล.หน่วยงาน || '';
+  $('ท้ายหน่วยงาน').textContent = ข้อมูล.หน่วยงาน || '';
+  $('ปรับปรุงเมื่อ').textContent = ข้อมูล.ปรับปรุงเมื่อ ? ('ปรับปรุงข้อมูลเมื่อ ' + ข้อมูล.ปรับปรุงเมื่อ) : '';
+  document.title = ข้อมูล.ชื่อแอป || 'ศูนย์รวมระบบ';
+
+  var หัวประกาศ = '';
+  if (ข้อมูล.ข้อความประกาศ) หัวประกาศ += '<div class="ประกาศ">' + หนี(ข้อมูล.ข้อความประกาศ) + '</div>';
+  if (จากแคช) หัวประกาศ += '<div class="ออฟไลน์">กำลังแสดงข้อมูลที่บันทึกไว้ในเครื่อง (ไม่ได้เชื่อมต่ออินเทอร์เน็ต)</div>';
+  $('กล่องประกาศ').innerHTML = หัวประกาศ;
+
+  var ระบบ = (ข้อมูล.ระบบ || []).filter(function (r) { return String(r.ลิงก์ || '').trim() !== ''; });
+
+  if (!ระบบ.length) {
+    $('เนื้อหา').innerHTML =
+      '<div class="ว่าง"><div class="ใหญ่">🧩</div><b>ยังไม่ได้ใส่ลิงก์ของระบบใดเลย</b><br>' +
+      'แตะรูปเฟือง ⚙ มุมขวาบน เพื่อใส่ลิงก์ของแต่ละระบบ</div>';
+    return;
+  }
+
+  var หมวดเรียง = (ข้อมูล.ลำดับหมวด || []).slice();
+  ระบบ.forEach(function (r) {
+    var h = r.หมวด || 'อื่น ๆ';
+    if (หมวดเรียง.indexOf(h) === -1) หมวดเรียง.push(h);
+  });
+
+  var h = '';
+  หมวดเรียง.forEach(function (m) {
+    var ใน = ระบบ.filter(function (r) { return (r.หมวด || 'อื่น ๆ') === m; });
+    if (!ใน.length) return;
+    h += '<div class="หมวด"><h2>' + หนี(m) + '</h2><div class="กริด">';
+    ใน.forEach(function (r) {
+      h += '<a class="ไทล์" href="' + หนี(r.ลิงก์) + '" target="_blank" rel="noopener">' +
+             '<span class="ไอคอน ' + หนี(r.สี || 'ฟ้า') + '">' + หนี(r.ไอคอน || '🔗') + '</span>' +
+             '<span class="ชื่อ">' + หนี(r.ชื่อ) + '</span>' +
+             (r.คำอธิบาย ? '<span class="ย่อย">' + หนี(r.คำอธิบาย) + '</span>' : '') +
+           '</a>';
+    });
+    h += '</div></div>';
+  });
+  $('เนื้อหา').innerHTML = h;
+}
+
+function สลับวิธี(ช) {
+  $('วิธีios').classList.toggle('ซ่อน', ช !== 'ios');
+  $('วิธีand').classList.toggle('ซ่อน', ช !== 'and');
+  $('ปุ่มios').classList.toggle('ใช้อยู่', ช === 'ios');
+  $('ปุ่มand').classList.toggle('ใช้อยู่', ช === 'and');
+}
+
+/* ============================================================
+   ติดตั้งเป็นแอป
+   ============================================================ */
+window.addEventListener('beforeinstallprompt', function (e) {
+  e.preventDefault();
+  ตัวติดตั้ง = e;
+  $('ปุ่มติดตั้ง').classList.remove('ซ่อน');
+});
+
+function ติดตั้งแอป() {
+  if (!ตัวติดตั้ง) return;
+  ตัวติดตั้ง.prompt();
+  ตัวติดตั้ง.userChoice.then(function () {
+    ตัวติดตั้ง = null;
+    $('ปุ่มติดตั้ง').classList.add('ซ่อน');
+  });
+}
+
+window.addEventListener('appinstalled', function () {
+  $('ปุ่มติดตั้ง').classList.add('ซ่อน');
+  $('กล่องแนะนำ').classList.add('ซ่อน');
+});
+
+// เปิดจากไอคอนบนหน้าจอโฮมแล้ว ไม่ต้องแสดงวิธีติดตั้งอีก
+if (window.matchMedia('(display-mode: standalone)').matches || window.navigator.standalone) {
+  document.addEventListener('DOMContentLoaded', function () {
+    $('กล่องแนะนำ').classList.add('ซ่อน');
+  });
+}
+
+/* ============================================================
+   ตัวแก้ไขรายการระบบ
+   แก้แล้วดาวน์โหลดไฟล์ systems.json ไปวางทับบนโฮสต์
+   ============================================================ */
+function เปิดกล่อง(หัว, เนื้อ, ท้าย) {
+  $('หัวกล่อง').textContent = หัว;
+  $('เนื้อกล่อง').innerHTML = เนื้อ;
+  $('ท้ายกล่อง').innerHTML = ท้าย || '';
+  $('ฉาก').classList.remove('ซ่อน');
+}
+function ปิดกล่อง(){ $('ฉาก').classList.add('ซ่อน'); }
+
+function เปิดตัวแก้ไข() {
+  if (!ข้อมูล) return;
+  รายการแก้ = JSON.parse(JSON.stringify(ข้อมูล.ระบบ || []));
+
+  เปิดกล่อง('แก้ไขรายการระบบ',
+    '<div class="แจ้ง ข้อมูล">แก้ไขที่นี่แล้วกด <b>ดาวน์โหลดไฟล์</b> ' +
+    'จากนั้นนำไฟล์ <b>systems.json</b> ไปวางทับบนโฮสต์ ทุกคนจะเห็นรายการใหม่พร้อมกัน<br>' +
+    'ระบบที่เว้นลิงก์ว่างไว้จะไม่แสดงบนหน้าแรก · ลบชื่อออกให้ว่าง = ลบไทล์นั้นทิ้ง</div>' +
+    '<div class="ช่อง"><label>ชื่อหน่วยงาน</label>' +
+    '<input id="ตหน่วยงาน" value="' + หนี(ข้อมูล.หน่วยงาน || '') + '"></div>' +
+    '<div class="ช่อง"><label>ข้อความประกาศ (เว้นว่างได้)</label>' +
+    '<input id="ตประกาศ" value="' + หนี(ข้อมูล.ข้อความประกาศ || '') + '" placeholder="เช่น ปิดระบบปรับปรุง 25 ส.ค."></div>' +
+    '<h3 style="font-size:14.5px;margin:20px 0 10px">รายการระบบ</h3>' +
+    '<div id="รายการแก้"></div>' +
+    '<button class="ปุ่มรอง" style="width:100%;margin-top:6px" onclick="เพิ่มแถว()">+ เพิ่มระบบใหม่</button>',
+    '<button class="ปุ่มรอง" onclick="ปิดกล่อง()">ปิด</button>' +
+    '<button class="ปุ่มรอง" onclick="ดูตัวอย่าง()">ดูตัวอย่างก่อน</button>' +
+    '<button class="ปุ่มหลัก" onclick="ดาวน์โหลด()">ดาวน์โหลดไฟล์</button>');
+
+  วาดรายการแก้();
+}
+
+function วาดรายการแก้() {
+  var สีทั้งหมด = ['ฟ้า','เขียว','ม่วง','ส้ม','แดง','คราม','เทา'];
+  var หมวดทั้งหมด = (ข้อมูล.ลำดับหมวด || []).concat(['อื่น ๆ']);
+  รายการแก้.forEach(function (r) {
+    if (r.หมวด && หมวดทั้งหมด.indexOf(r.หมวด) === -1) หมวดทั้งหมด.push(r.หมวด);
+  });
+
+  $('รายการแก้').innerHTML = รายการแก้.map(function (r, i) {
+    return '<div class="แถวแก้">' +
+      '<div class="บนสุด">' +
+        '<input class="ไอ" id="ไอ' + i + '" value="' + หนี(r.ไอคอน || '🔗') + '" maxlength="4">' +
+        '<input class="ชื่อ" id="ชื่อ' + i + '" value="' + หนี(r.ชื่อ || '') + '" placeholder="ชื่อระบบ">' +
+        '<button class="ปุ่มลบเล็ก" onclick="ลบแถว(' + i + ')">ลบ</button>' +
+      '</div>' +
+      '<input id="ลิงก์' + i + '" value="' + หนี(r.ลิงก์ || '') + '" placeholder="วางลิงก์ของระบบ">' +
+      '<div class="คู่">' +
+        '<input id="คำ' + i + '" value="' + หนี(r.คำอธิบาย || '') + '" placeholder="คำอธิบายสั้น ๆ">' +
+        '<select id="หมวด' + i + '">' + หมวดทั้งหมด.map(function (h) {
+          return '<option' + (String(r.หมวด) === h ? ' selected' : '') + '>' + หนี(h) + '</option>';
+        }).join('') + '</select>' +
+      '</div>' +
+      '<div class="คู่">' +
+        '<select id="สี' + i + '">' + สีทั้งหมด.map(function (s) {
+          return '<option' + (String(r.สี) === s ? ' selected' : '') + '>' + s + '</option>';
+        }).join('') + '</select>' +
+        '<div style="display:flex;align-items:center;font-size:12px;color:var(--จาง)">' +
+          (r.ลิงก์ ? '✓ แสดงบนหน้าแรก' : 'ยังไม่แสดง (ไม่มีลิงก์)') + '</div>' +
+      '</div></div>';
+  }).join('');
+}
+
+function เก็บค่า() {
+  return รายการแก้.map(function (r, i) {
+    var url = $('ลิงก์' + i).value.trim();
+    if (url && url.indexOf('http') !== 0) url = 'https://' + url;
+    return {
+      ชื่อ: $('ชื่อ' + i).value.trim(),
+      คำอธิบาย: $('คำ' + i).value.trim(),
+      ไอคอน: $('ไอ' + i).value.trim() || '🔗',
+      สี: $('สี' + i).value,
+      หมวด: $('หมวด' + i).value,
+      ลิงก์: url
+    };
+  }).filter(function (r) { return r.ชื่อ !== ''; });
+}
+
+function เพิ่มแถว() {
+  รายการแก้ = เก็บค่า();
+  รายการแก้.push({ ชื่อ:'', คำอธิบาย:'', ไอคอน:'🔗', สี:'ฟ้า', หมวด:'อื่น ๆ', ลิงก์:'' });
+  วาดรายการแก้();
+}
+function ลบแถว(i) {
+  รายการแก้ = เก็บค่า();
+  รายการแก้.splice(i, 1);
+  วาดรายการแก้();
+}
+
+function สร้างข้อมูลใหม่() {
+  var วันนี้ = new Date();
+  var พศ = วันนี้.getFullYear() + 543;
+  var สอง = function (n) { return ('0' + n).slice(-2); };
+  return {
+    หน่วยงาน: $('ตหน่วยงาน').value.trim(),
+    ชื่อแอป: ข้อมูล.ชื่อแอป || 'ศูนย์รวมระบบ',
+    ข้อความประกาศ: $('ตประกาศ').value.trim(),
+    ปรับปรุงเมื่อ: พศ + '-' + สอง(วันนี้.getMonth() + 1) + '-' + สอง(วันนี้.getDate()),
+    ลำดับหมวด: ข้อมูล.ลำดับหมวด || [],
+    ระบบ: เก็บค่า()
+  };
+}
+
+function ดูตัวอย่าง() {
+  ข้อมูล = สร้างข้อมูลใหม่();
+  วาด(false);
+  ปิดกล่อง();
+  setTimeout(function () {
+    alert('นี่เป็นเพียงการดูตัวอย่างบนเครื่องนี้\n\n' +
+          'ถ้าพอใจแล้ว ให้กดเฟือง ⚙ อีกครั้ง แล้วกด "ดาวน์โหลดไฟล์" ' +
+          'เพื่อนำไฟล์ไปวางทับบนโฮสต์ มิฉะนั้นรีเฟรชหน้าแล้วจะกลับไปเป็นของเดิม');
+  }, 400);
+}
+
+function ดาวน์โหลด() {
+  var ใหม่ = สร้างข้อมูลใหม่();
+  var ข้อความ = JSON.stringify(ใหม่, null, 2);
+  var blob = new Blob([ข้อความ], { type: 'application/json;charset=utf-8' });
+  var a = document.createElement('a');
+  a.href = URL.createObjectURL(blob);
+  a.download = 'systems.json';
+  document.body.appendChild(a);
+  a.click();
+  document.body.removeChild(a);
+
+  ข้อมูล = ใหม่;
+  try { localStorage.setItem('ระบบสำรอง', ข้อความ); } catch (e) {}
+  วาด(false);
+
+  เปิดกล่อง('ดาวน์โหลดแล้ว',
+    '<div class="แจ้ง ดี">ได้ไฟล์ <b>systems.json</b> แล้ว</div>' +
+    '<p style="font-size:14px;line-height:1.85">ขั้นตอนต่อไป<br>' +
+    '1. เปิดโฮสต์ที่วางแอปไว้ (Netlify หรือ GitHub)<br>' +
+    '2. อัปโหลดไฟล์ <b>systems.json</b> ทับไฟล์เดิม<br>' +
+    '3. รอสักครู่แล้วรีเฟรชหน้านี้ ทุกเครื่องจะเห็นรายการใหม่</p>' +
+    '<div class="แจ้ง ข้อมูล">ถ้ายังไม่อัปโหลด รายการใหม่จะแสดงเฉพาะบนเครื่องนี้เท่านั้น</div>',
+    '<button class="ปุ่มหลัก" onclick="ปิดกล่อง()">เข้าใจแล้ว</button>');
+}
+
+/* ============================================================
+   Service Worker — ทำให้เปิดใช้ได้ตอนไม่มีเน็ต
+   ============================================================ */
+if ('serviceWorker' in navigator) {
+  window.addEventListener('load', function () {
+    navigator.serviceWorker.register('sw.js').catch(function (e) {
+      console.log('ลงทะเบียน service worker ไม่สำเร็จ', e);
+    });
+  });
+}
+
+โหลด();
+</script>
+</body>
+</html>
