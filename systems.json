@@ -3,7 +3,12 @@
   "ชื่อแอป": "ศูนย์รวมระบบ",
   "ข้อความประกาศ": "",
   "ปรับปรุงเมื่อ": "2569-08-20",
-  "ลำดับหมวด": ["งานสอน", "ฝึกประสบการณ์", "วิจัยและบริการวิชาการ", "งานสนับสนุน"],
+  "ลำดับหมวด": [
+    "งานสอน",
+    "ฝึกประสบการณ์",
+    "วิจัยและบริการวิชาการ",
+    "งานสนับสนุน"
+  ],
   "ระบบ": [
     {
       "ชื่อ": "เช็คชื่อเข้าเรียน",
@@ -11,7 +16,7 @@
       "ไอคอน": "📱",
       "สี": "ฟ้า",
       "หมวด": "งานสอน",
-      "ลิงก์": ""
+      "ลิงก์": "https://script.google.com/macros/s/AKfycbzt8DchuKVI0betiQ7bDR4lqvg6c_0Hz14jywNI3KpTUYwTdMQjhwylu3eaNA21sK8akg/exec"
     },
     {
       "ชื่อ": "ประกาศคะแนน",
@@ -19,7 +24,7 @@
       "ไอคอน": "📊",
       "สี": "ม่วง",
       "หมวด": "งานสอน",
-      "ลิงก์": ""
+      "ลิงก์": "https://script.google.com/macros/s/AKfycbzL5mnPaWXluq12S1osH3SC40AlQr9Lpx70Nhr_ZHfNQ2H283yzSXvT5ud9YWCd4YJr1w/exec"
     },
     {
       "ชื่อ": "ฝึกประสบการณ์วิชาชีพ",
@@ -27,7 +32,7 @@
       "ไอคอน": "🏥",
       "สี": "เขียว",
       "หมวด": "ฝึกประสบการณ์",
-      "ลิงก์": ""
+      "ลิงก์": "https://script.google.com/macros/s/AKfycbzLdWLWcn1qge-rtQ2cwzQaHPh71t4JMMDeOqlZCUl8YUezL0dL5b3BbGYzJZHEC58/exec"
     },
     {
       "ชื่อ": "ประกาศผลฝึก",
@@ -35,7 +40,7 @@
       "ไอคอน": "📋",
       "สี": "เขียว",
       "หมวด": "ฝึกประสบการณ์",
-      "ลิงก์": ""
+      "ลิงก์": "https://script.google.com/macros/s/AKfycbwxdEH3UpOmxURhvTe87k7infbIv9hSO46H3FXgdiftA4hxoGjIL1e6ZRJMk4oRAGVQ/exec"
     },
     {
       "ชื่อ": "แดชบอร์ดผลประเมิน",
@@ -67,7 +72,7 @@
       "ไอคอน": "⚖️",
       "สี": "คราม",
       "หมวด": "วิจัยและบริการวิชาการ",
-      "ลิงก์": ""
+      "ลิงก์": "https://script.google.com/a/g.lpru.ac.th/macros/s/AKfycbyOXyy7p4NWJJGzEvTcMDqXR1GvP0mKmXKL6PKvetz8/dev?g=NY4RetwQbX"
     },
     {
       "ชื่อ": "ยืม-คืนวัสดุครุภัณฑ์",
@@ -75,7 +80,7 @@
       "ไอคอน": "📦",
       "สี": "เทา",
       "หมวด": "งานสนับสนุน",
-      "ลิงก์": ""
+      "ลิงก์": "https://script.google.com/macros/s/AKfycbwA6jffgGSNnB854Ez9kwyYCoi7YPmPtisMk89HYEiWpox9Lmj6vcwZlyEi8qJYOJoe/exec"
     },
     {
       "ชื่อ": "LINE OA ของสาขา",
