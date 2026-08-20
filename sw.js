@@ -10,25 +10,31 @@
  * เบราว์เซอร์จะได้รู้ว่าต้องโหลดไฟล์ใหม่ ไม่ใช้ของเก่าค้าง
  *******************************************************************/
 
-var รุ่นแคช = 'ศูนย์รวมระบบ-v1';
+var รุ่นแคช = 'ศูนย์รวมระบบ-v4';
 
 var ไฟล์โครงแอป = [
   '.',
   'index.html',
   'manifest.json',
-  'icons/icon-192.png',
-  'icons/icon-512.png',
-  'icons/apple-touch-icon.png',
-  'icons/favicon.png'
+  'apple-touch-icon.png',
+  'icon-192.png',
+  'icon-512.png'
 ];
 
-/* ---------- ติดตั้ง : เก็บไฟล์โครงแอปลงแคช ---------- */
+/* ---------- ติดตั้ง : เก็บไฟล์โครงแอปลงแคช ----------
+ * เก็บทีละไฟล์ ไม่ใช้ addAll เพราะถ้าใช้ addAll แล้วมีไฟล์ใดหายไปแม้ไฟล์เดียว
+ * (เช่น ลืมอัปโหลดโฟลเดอร์ icons) จะล้มทั้งชุด ไม่ได้แคชอะไรเลย
+ * วิธีนี้ไฟล์ที่มีอยู่จะถูกเก็บไว้ได้ ส่วนไฟล์ที่หายจะข้ามไปเฉย ๆ
+ */
 self.addEventListener('install', function (e) {
   e.waitUntil(
-    caches.open(รุ่นแคช)
-      .then(function (c) { return c.addAll(ไฟล์โครงแอป); })
-      .then(function () { return self.skipWaiting(); })
-      .catch(function (err) { console.log('แคชไฟล์เริ่มต้นไม่ครบ', err); })
+    caches.open(รุ่นแคช).then(function (c) {
+      return Promise.all(ไฟล์โครงแอป.map(function (ไฟล์) {
+        return c.add(ไฟล์).catch(function () {
+          console.log('ข้ามไฟล์ที่โหลดไม่ได้ :', ไฟล์);
+        });
+      }));
+    }).then(function () { return self.skipWaiting(); })
   );
 });
 
@@ -67,7 +73,27 @@ self.addEventListener('fetch', function (e) {
     return;
   }
 
-  // ไฟล์อื่น : เอาจากแคชก่อน ถ้าไม่มีค่อยไปเอาจากเน็ต
+  // หน้าเว็บ (index.html) : เอาจากเน็ตก่อนเสมอ
+  // ถ้าใช้แคชก่อน เวลาอัปไฟล์ใหม่ขึ้นโฮสต์ เครื่องที่เคยเปิดจะยังเห็นหน้าเก่าค้างอยู่
+  // ต้องกดล้างแคชเองซึ่งผู้ใช้ทั่วไปทำไม่เป็น
+  if (req.mode === 'navigate' || url.pathname.indexOf('.html') !== -1) {
+    e.respondWith(
+      fetch(req)
+        .then(function (res) {
+          var สำเนา = res.clone();
+          caches.open(รุ่นแคช).then(function (c) { c.put(req, สำเนา); });
+          return res;
+        })
+        .catch(function () {
+          return caches.match(req).then(function (พบ) {
+            return พบ || caches.match('index.html');
+          });
+        })
+    );
+    return;
+  }
+
+  // ไฟล์อื่น (ไอคอน) : เอาจากแคชก่อน ถ้าไม่มีค่อยไปเอาจากเน็ต
   e.respondWith(
     caches.match(req).then(function (พบ) {
       if (พบ) return พบ;
